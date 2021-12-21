@@ -9,6 +9,6 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-ENV BOT_TOKEN=1266964486:AAHG88-GRJn7Ow5dAtKD7_MpJIK5ivsPQAE
+ENV BOT_TOKEN=${secrets.BOT_TOKEN}
 
 CMD [ "python3", "./main.py" ]
