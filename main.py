@@ -20,8 +20,8 @@ async def error_bot_blocked(update: types.Update, exception: BotBlocked):
 
 
 @dp.message_handler()
-async def cmd_test1(message: types.Message):
-    await message.reply(message.text)
+async def replier(message: types.Message):
+    await message.answer(message.text)
 
 
 if __name__ == "__main__":
