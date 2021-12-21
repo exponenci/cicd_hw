@@ -4,14 +4,16 @@ from sys import exit as exit_f
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.exceptions import BotBlocked
 
-
 bot_token = getenv("BOT_TOKEN")
 if not bot_token:
     exit_f("Error: no token provided")
 
 bot = Bot(token=bot_token)
 dp = Dispatcher(bot)
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+)
 
 
 @dp.errors_handler(exception=BotBlocked)

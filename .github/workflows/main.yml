@@ -18,6 +18,18 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint
+        pip install -r requirements.txt
     - name: Analysing the code with pylint
       run: |
-        pip install -r requirements.txt ; pylint `ls -R|grep .py$|xargs` --disable=missing-docstring
+        pylint `ls -R|grep .py$|xargs` --disable=missing-docstring
+
+  docker_build:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - name: Checkout Docker
+        uses: actions/checkout@v2
+      - name: Compose docker action step
+        uses: ./ # Uses an action in the root directory
+      - name: Notify about output
+        run: echo "Job has been finished"

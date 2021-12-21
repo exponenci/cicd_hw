@@ -1,0 +1,6 @@
+# action.yml
+name: 'Runs Docker file'
+description: 'Runs Docker file in order to check its validity'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
