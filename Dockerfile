@@ -11,7 +11,7 @@ COPY . .
 
 ENV BOT_TOKEN=1266964486:AAHG88-GRJn7Ow5dAtKD7_MpJIK5ivsPQAE
 
-ENTRYPOINT ["/run.sh"]
+ENTRYPOINT ["./run.sh"]
 
 # uncomment this if want to run project as it is:
 # CMD [ "python3", "./main.py" ]
