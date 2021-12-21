@@ -1,9 +1,9 @@
-name: Pylint
+name: MainJob
 
 on: [push]
 
 jobs:
-  build:
+  linter_ckeck:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,11 +25,13 @@ jobs:
 
   docker_build:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Run docker_build_action
     steps:
       - name: Checkout Docker
         uses: actions/checkout@v2
       - name: Compose docker action step
         uses: ./ # Uses an action in the root directory
+        with:
+          docker_run_mode: 'ci_run'
       - name: Notify about output
         run: echo "Job has been finished"
