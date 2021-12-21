@@ -1,12 +1,13 @@
 import logging
+from os import getenv
+from sys import exit as exit_f
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.exceptions import BotBlocked
-from os import getenv
-from sys import exit
+
 
 bot_token = getenv("BOT_TOKEN")
 if not bot_token:
-    exit("Error: no token provided")
+    exit_f("Error: no token provided")
 
 bot = Bot(token=bot_token)
 dp = Dispatcher(bot)
