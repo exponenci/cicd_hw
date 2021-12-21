@@ -1,9 +1,6 @@
-#!/usr/bin/python3
-
 import logging
 from os import getenv
 from sys import exit as exit_f
-from sys import argv
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.exceptions import BotBlocked
 
@@ -31,5 +28,4 @@ async def replier(message: types.Message):
 
 
 if __name__ == "__main__":
-    if len(argv) != 2 or argv[1] != "ci_run":
-        executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp, skip_updates=True)

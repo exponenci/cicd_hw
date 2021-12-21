@@ -22,16 +22,3 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint `ls -R|grep .py$|xargs` --disable=missing-docstring
-
-  docker_build:
-    runs-on: ubuntu-latest
-    name: Run docker_build_action
-    steps:
-      - name: Checkout Docker
-        uses: actions/checkout@v2
-      - name: Compose docker action step
-        uses: ./ # Uses an action in the root directory
-        with:
-          docker_run_mode: 'ci_run'
-      - name: Notify about output
-        run: echo "Job has been finished"
