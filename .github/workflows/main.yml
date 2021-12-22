@@ -2,7 +2,7 @@ name: MainWorkflow
 
 on:
   release:
-    types: [published, created]
+    types: [published]
   create:
     tags:
       - '*'
