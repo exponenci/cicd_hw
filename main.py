@@ -31,7 +31,7 @@ async def main():
     if not bot_token:
         exit_f("Error: no token provided")
 
-    bot = Bot(token='bot_token')
+    bot = Bot(token=bot_token)
     bot_info = await bot.get_me()
     global_values_container['bot_username'] = bot_info['username']
 
