@@ -19,7 +19,7 @@
 Следующий участок кода был добавлен в скрипт, чтоб ```watchtower```
 позволил запускать несколько образов на одном Docker хосте:
 ```
-command: --interval 30 --scope myscope
+command: --interval 5 --scope myscope
 labels:
    - "com.centurylinklabs.watchtower.scope=myscope"
 ```

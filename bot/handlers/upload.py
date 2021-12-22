@@ -39,7 +39,7 @@ async def cmd_start(message: types.Message, state: FSMContext):
         )
     else:
         await message.answer(
-                "password is required...",
+                "password is required... please, enter password",
                 reply_markup=keyboards_dp['cancel']
         )
         await state.update_data(file_id=command_args)
@@ -56,7 +56,7 @@ async def password_required(message: types.Message, state: FSMContext):
     await getattr(message,
                   file_type_to_method[file_instance.file_type])(
             file_instance.file_id,
-            file_instance.caption,
+            caption=file_instance.caption,
             reply_markup=keyboards_dp['main']
     )
     await state.finish()
