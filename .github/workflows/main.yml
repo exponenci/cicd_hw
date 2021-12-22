@@ -1,7 +1,6 @@
 name: MainWorkflow
 
 on:
-  push:
   create:
     tags:
   release:
