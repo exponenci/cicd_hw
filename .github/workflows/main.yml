@@ -1,4 +1,4 @@
-name: MainJob
+name: MainWorkflow
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   release:
 
 jobs:
-  linter_ckeck:
+  linter_check:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Extract metadata (tags, labels) for Docker
+      - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
