@@ -21,6 +21,7 @@ class File(Base):
     file_id = Column(String, unique=True)
     file_type = Column(String)
     holder_id = Column(String)
+    code = Column(String)
     password = Column(String, default='-')
     views_count = Column(Integer, default=0)
 
@@ -34,7 +35,7 @@ class File(Base):
 
     @property
     def caption(self):
-        return f"That is your file: <file_id: {self.code}>\n\n" \
+        return f"That is your file: <file_id: {self.file_id}>\n\n" \
                f"Views: {self.views_count}\n\n"
 
 
@@ -83,16 +84,17 @@ class Database:
         with self.session:
             return self.session.query(File).filter(File.holder_id == user_id).all()
 
-    def get_file(self, file_id: str):
+    def get_file(self, file_code: str):
         with self.session:
-            return self.session.query(File).filter(File.file_id == file_id).first()
+            return self.session.query(File).filter(File.code == file_code).first()
 
-    def increment_file_views(self, file_id: str):
+    def increment_file_views(self, file_code: str):
         with self.session:
             file_instance = self.session.query(File).filter(
-                    File.file_id == file_id).first()
-            file_instance.views_count += 1
-            self.session.commit()
+                    File.code == file_code).first()
+            if file_instance:
+                file_instance.views_count += 1
+                self.session.commit()
 
     def delete_file(self, file_id: str):
         with self.session:
