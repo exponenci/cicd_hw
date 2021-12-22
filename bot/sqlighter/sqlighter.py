@@ -35,7 +35,7 @@ class File(Base):
 
     @property
     def caption(self):
-        return f"That is your file: <file_id: {self.file_id}>\n\n" \
+        return f"That is your file: <file_id: {self.file_id[:9]}>\n\n" \
                f"Views: {self.views_count}\n\n"
 
 

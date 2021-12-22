@@ -29,6 +29,12 @@ async def cmd_start(message: types.Message, state: FSMContext):
         )
         return
     file_instance = db.get_file(command_args)
+    if not file_instance:
+        await message.answer(
+                "File not found. Invalid link",
+                reply_markup=keyboards_dp['main']
+        )
+        return
     if file_instance.password == '-':
         db.increment_file_views(command_args)
         await getattr(message,
