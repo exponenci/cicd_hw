@@ -1,9 +1,11 @@
 name: MainWorkflow
 
 on:
+  release:
+    types: [published, created]
   create:
     tags:
-  release:
+      - '*'
 
 jobs:
   linter_check:

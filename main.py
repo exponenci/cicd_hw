@@ -24,7 +24,8 @@ async def error_bot_blocked(update: types.Update, exception: BotBlocked):
 
 @dp.message_handler()
 async def replier(message: types.Message):
-    await message.answer(f"Hello, {message.from_user.id}!\n\nthis is your message:\n{message.text.upper()}")
+    await message.answer(f"Hello, {message.from_user.id}!\n\n"
+                         f"this is your message:\n{message.text.upper()}")
 
 
 if __name__ == "__main__":
