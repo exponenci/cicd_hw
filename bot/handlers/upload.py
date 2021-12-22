@@ -6,7 +6,8 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
-from bot.sqlighter.sqlighter import keyboards_dp, db, file_type_to_method, global_values_container
+from bot.sqlighter.sqlighter import keyboards_dp, db, file_type_to_method, \
+    global_values_container
 
 
 class UploadFile(StatesGroup):
@@ -91,7 +92,8 @@ async def file_uploaded(message: types.Message, state: FSMContext):
     await state.update_data(file_id=file_id,
                             file_type=file_type,
                             holder_id=message.from_user.id,
-                            code=''.join(random.sample(ascii_letters + digits, random.randint(33, 40))))
+                            code=''.join(random.sample(ascii_letters + digits,
+                                                       random.randint(33, 40))))
     await UploadFile.waiting_for_password.set()
     await message.answer("Send password or send `-` if you don't want set password")
 
@@ -121,7 +123,8 @@ async def show_user_files(message: types.Message, state: FSMContext):
                     list(
                             map(
                                     lambda pair:
-                                    f'{pair[0]}. https://t.me/{global_values_container["bot_username"]}'
+                                    f'{pair[0]}. https://t.me/'
+                                    f'{global_values_container["bot_username"]}'
                                     f'?start={pair[1].code} '
                                     f'| {pair[1].file_type} '
                                     f'| {pair[1].views_count} '
@@ -145,14 +148,30 @@ async def cmd_cancel(message: types.Message, state: FSMContext):
 
 
 def register_handlers_upload(dp: Dispatcher):
-    dp.register_message_handler(cmd_start, commands="start", state="*")
-    dp.register_message_handler(cmd_cancel, commands="cancel", state="*")
-    dp.register_message_handler(cmd_cancel, Text(equals="cancel", ignore_case=True), state="*")
-    dp.register_message_handler(password_required, state=UploadFile.waiting_files_password)
+    dp.register_message_handler(cmd_start,
+                                commands="start",
+                                state="*")
+    dp.register_message_handler(cmd_cancel,
+                                commands="cancel",
+                                state="*")
+    dp.register_message_handler(cmd_cancel,
+                                Text(equals="cancel", ignore_case=True),
+                                state="*")
+    dp.register_message_handler(password_required,
+                                state=UploadFile.waiting_files_password)
 
-    dp.register_message_handler(upload_start, commands="upload", state="*")
-    dp.register_message_handler(upload_start, Text(equals="upload file", ignore_case=True), state="*")
-    dp.register_message_handler(file_uploaded, state=UploadFile.waiting_for_file, content_types=types.ContentTypes.ANY)
-    dp.register_message_handler(password_registration, state=UploadFile.waiting_for_password)
+    dp.register_message_handler(upload_start,
+                                commands="upload",
+                                state="*")
+    dp.register_message_handler(upload_start,
+                                Text(equals="upload file", ignore_case=True),
+                                state="*")
+    dp.register_message_handler(file_uploaded,
+                                state=UploadFile.waiting_for_file,
+                                content_types=types.ContentTypes.ANY)
+    dp.register_message_handler(password_registration,
+                                state=UploadFile.waiting_for_password)
 
-    dp.register_message_handler(show_user_files, Text(equals="my files", ignore_case=True), state="*")
+    dp.register_message_handler(show_user_files,
+                                Text(equals="my files", ignore_case=True),
+                                state="*")

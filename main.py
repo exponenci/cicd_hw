@@ -35,12 +35,12 @@ async def main():
     bot_info = await bot.get_me()
     global_values_container['bot_username'] = bot_info['username']
 
-    dp = Dispatcher(bot, storage=MemoryStorage())
+    dispatcher = Dispatcher(bot, storage=MemoryStorage())
 
-    register_handlers_upload(dp)
+    register_handlers_upload(dispatcher)
     await set_commands(bot)
 
-    await dp.start_polling()
+    await dispatcher.start_polling()
 
 
 if __name__ == "__main__":
