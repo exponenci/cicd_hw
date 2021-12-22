@@ -1,33 +1,47 @@
+import asyncio
 import logging
 from os import getenv
 from sys import exit as exit_f
-from aiogram import Bot, Dispatcher, executor, types
-from aiogram.utils.exceptions import BotBlocked
 
-bot_token = getenv("BOT_TOKEN")
-if not bot_token:
-    exit_f("Error: no token provided")
+from aiogram import Bot, Dispatcher
+from aiogram.types import BotCommand
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
-bot = Bot(token=bot_token)
-dp = Dispatcher(bot)
-logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-)
+from bot.handlers.upload import register_handlers_upload, global_values_container
+
+logger = logging.getLogger(__name__)
 
 
-@dp.errors_handler(exception=BotBlocked)
-async def error_bot_blocked(update: types.Update, exception: BotBlocked):
-    print(f"Bot has been blocked\nMessage: {update}\nError: {exception}")
-    return True
+async def set_commands(bot: Bot):
+    commands = [
+        BotCommand(command="/upload", description="upload new file"),
+        BotCommand(command="/cancel", description="cancel current action")
+    ]
+    await bot.set_my_commands(commands)
 
 
-@dp.message_handler()
-async def replier(message: types.Message):
-    await message.answer(f"Hello, {message.from_user.id}!\n\n"
-                         f"this is your message:\n{message.text}")
+async def main():
+    logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+    )
+    logger.error("Starting bot")
+
+    bot_token = getenv("BOT_TOKEN")
+    if not bot_token:
+        exit_f("Error: no token provided")
+
+    bot = Bot(token='bot_token')
+    bot_info = await bot.get_me()
+    global_values_container['bot_username'] = bot_info['username']
+
+    dp = Dispatcher(bot, storage=MemoryStorage())
+
+    register_handlers_upload(dp)
+    await set_commands(bot)
+
+    await dp.start_polling()
 
 
 if __name__ == "__main__":
-    print("Script is running")
-    executor.start_polling(dp, skip_updates=True)
+    asyncio.run(main())

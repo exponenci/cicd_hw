@@ -7,6 +7,7 @@ services:
       - "com.centurylinklabs.watchtower.scope=myscope"
     environment:
       BOT_TOKEN: ${BOT_TOKEN}
+      DATABASE_NAME: ${DATABASE_NAME}
 
   watchtower:
     image: containrrr/watchtower
