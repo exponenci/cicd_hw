@@ -32,7 +32,7 @@ jobs:
         pylint `ls -R|grep .py$|xargs` --disable=missing-docstring
 
   docker_deploy:
-    needs: linter_ckeck
+    needs: linter_check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
